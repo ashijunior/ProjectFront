@@ -1,0 +1,84 @@
+<div class="container">
+  <header>
+    <h1>Products</h1>
+    <button class="cart-btn" (click)="toggleCart()">
+      <span class="material-icons">shopping_cart</span>
+      <span class="badge" *ngIf="totalItems">{{ totalItems }}</span>
+    </button>
+  </header>
+
+  <div class="grid">
+    <div *ngFor="let p of products" class="card">
+      <div class="card-image">
+        <img [src]="p.pictureUrl" alt="{{p.name}}">
+        <span class="material-icons favorite-icon">favorite_border</span>
+      </div>
+      <div class="card-body">
+        <h4>{{p.name}}</h4>
+        <p class="description">{{p.description}}</p>
+        <div class="card-footer">
+          <span class="price">₦{{p.price | number}}</span>
+          <button class="add-btn" (click)="addToCart(p)">
+            <span class="material-icons">add_shopping_cart</span>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-overlay" [class.active]="showCart" (click)="toggleCart()"></div>
+
+  <div class="cart-panel" [class.open]="showCart">
+    <div class="cart-header">
+      <h2>Cart Items</h2>
+      <button class="close" (click)="toggleCart()">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <div class="cart-body">
+      <div *ngIf="!cart?.items?.length" class="empty-cart">
+        <span class="material-icons empty-icon">remove_shopping_cart</span>
+        <p>Your cart is empty</p>
+        <button class="continue-btn" (click)="toggleCart()">
+          <span class="material-icons">shopping_bag</span>
+          Continue Shopping
+        </button>
+      </div>
+
+      <div *ngFor="let i of cart?.items" class="cart-item">
+        <div class="item-info">
+          <img [src]="i.pictureUrl" alt="{{i.productName}}">
+          <div>
+            <h4>{{i.productName}}</h4>
+            <span class="item-price">₦{{i.price | number}}</span>
+          </div>
+        </div>
+        <div class="item-actions">
+          <button class="action-btn" (click)="decrease(i)">
+            <span class="material-icons">remove</span>
+          </button>
+          <span>{{i.quantity}}</span>
+          <button class="action-btn" (click)="increase(i)">
+            <span class="material-icons">add</span>
+          </button>
+          <button class="remove-btn" (click)="remove(i)">
+            <span class="material-icons">delete</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="cart-footer" *ngIf="cart?.items?.length">
+        <div class="total">
+          <span>Total:</span>
+          <span class="amount">₦{{ totalPrice | number }}</span>
+        </div>
+        <button class="clear-btn" (click)="clear()">
+          <span class="material-icons">delete_sweep</span>
+          Clear Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

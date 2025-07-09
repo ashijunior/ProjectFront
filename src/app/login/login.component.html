@@ -1,0 +1,32 @@
+
+<div class="container">
+  <div class="login-container">
+  <h2 class="login-title">Login</h2>
+
+  <div class="credentials">
+    <p><strong>Username:</strong> admin</p>
+    <p><strong>Password:</strong> 1234</p>
+  </div>
+
+  <div class="form-group">
+    <input
+      [(ngModel)]="inputUsername"
+      placeholder="Username"
+      (keydown)="onSubmit($event)"
+      class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <input
+      [(ngModel)]="inputPassword"
+      placeholder="Password"
+      type="password"
+      (keydown)="onSubmit($event)"
+      class="form-control" />
+  </div>
+
+  <button (click)="login()" class="login-button">Login</button>
+
+  <p *ngIf="error" class="error-message">{{ error }}</p>
+</div>
+</div>
